@@ -5,6 +5,31 @@ description: ""
 baseurl: "/notes" # the subpath of your site, e.g. /blog/
 url: "http://sashagusev.github.io" # the base hostname & protocol for your site
 github_username:  sashagusev
+author:
+  fullname: Sasha Gusev
+  github: sashagusev
 
 # Build settings
 markdown: kramdown
+permalink: /:year-:month/:title.html
+
+# Scholar settings
+scholar:
+  style: chicago-author-date
+  locale: en
+
+  sort_by: none
+  order: ascending
+
+  source: ./_bibliography
+  bibliography: references.bib
+  bibliography_template: "{{reference}}"
+
+  replace_strings: true
+  join_strings:    true
+
+  details_dir:    bibliography
+  details_layout: bibtex.html
+  details_link:   Details
+
+  query: "@*"
