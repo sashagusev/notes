@@ -2,8 +2,8 @@
 title: Notes
 email: agusev@hsph.harvard.edu
 description: ""
-baseurl: "/notes" # the subpath of your site, e.g. /blog/
-url: "http://sashagusev.github.io" # the base hostname & protocol for your site
+baseurl: "http://sashagusev.github.io" # the subpath of your site, e.g. /blog/
+##url: "http://sashagusev.github.io" # the base hostname & protocol for your site
 github_username:  sashagusev
 author:
   fullname: Sasha Gusev
