@@ -51,7 +51,7 @@ Whether you consider this a bias or not depends on the definition of the underly
 
 # Simulation details
 
-The code for this simulation framework has been made available at [https://github.com/sashagusev/sashagusev.github.io/tree/master/code](https://github.com/sashagusev/sashagusev.github.io/tree/master/code). It follows very closely with the simulation described in the previous post, please see documentation in that post for details. I have made trivial changes to compute the GRM from a subset of SNPs, and to introduce related individuals. The files are:
+The code for this simulation framework has been made available at [https://github.com/sashagusev/SKK-REML-sim-related](https://github.com/sashagusev/SKK-REML-sim-related). It follows very closely with the simulation described in the previous post, please see documentation in that post for details. I have made trivial changes to compute the GRM from a subset of SNPs, and to introduce related individuals. The files are:
 
 * func_reml.R : Functions implementing GREML with GCTA-like convergence criteria
 * sim.R : Generates genotypes and the GRM. For computational speed I have reduced the sample size to 1,000 but kept the ratio of samples:SNPs constant to maintain the random matrix properties.

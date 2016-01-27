@@ -1,6 +1,6 @@
 # Site settings
 title: Notes
-email: agusev@hsph.harvard.edu
+email: sgusev@gmail.com
 description: ""
 baseurl: "http://sashagusev.github.io" # the subpath of your site, e.g. /blog/
 ##url: "http://sashagusev.github.io" # the base hostname & protocol for your site
@@ -8,6 +8,7 @@ github_username:  sashagusev
 author:
   fullname: Sasha Gusev
   github: sashagusev
+  disqus: sashagusev
 
 # Build settings
 markdown: kramdown

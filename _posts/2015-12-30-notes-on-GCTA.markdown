@@ -43,7 +43,7 @@ Finally, the estimated confidence interval from all 50,000 SNPs is shown in dash
 
 # Simulation details
 
-The code for this simulation framework has been made available at [https://github.com/sashagusev/sashagusev.github.io/tree/master/code](https://github.com/sashagusev/sashagusev.github.io/tree/master/code). The simulation framework is written in R and divided into three main components which rely on GREML functions I have implemented in the `func_reml.R` file. These functions use GCTA-like convergence criteria, and should give nearly identical outputs to running GCTA directly. The workflow is: (1) Generate the full-sample genotypes, GRM, and phenotype and estimate full-sample h2g; (2) Load the data from (1), down-sample to 5,000 SNPs and re-estimate heritability 500 times; (3) Collate and plot the results.
+The code for this simulation framework has been made available at [https://github.com/sashagusev/SKK-REML-sim](https://github.com/sashagusev/SKK-REML-sim). The simulation framework is written in R and divided into three main components which rely on GREML functions I have implemented in the `func_reml.R` file. These functions use GCTA-like convergence criteria, and should give nearly identical outputs to running GCTA directly. The workflow is: (1) Generate the full-sample genotypes, GRM, and phenotype and estimate full-sample h2g; (2) Load the data from (1), down-sample to 5,000 SNPs and re-estimate heritability 500 times; (3) Collate and plot the results.
 
 ## (1) Full-sample simulation
 
