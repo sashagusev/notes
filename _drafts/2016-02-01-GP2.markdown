@@ -1,0 +1,72 @@
+---
+layout: post
+title:  "Gaussian process regression (fixed effects)"
+date:   2016-02-01 00:00:00
+categories: regression
+---
+
+*This is the second post on Gaussian process regression, see the first post [here]({{ site.baseurl }}/2016-01/GP.html).*
+
+Last time I discussed using Gaussian process (GP) regression to make predictions by restricting the space of functions that these predictions come from. This is in contrast to traditional OLS regression where a single function is defined and then the space of weights is restricted. One glaring omission from the previous work was any interplay these two models. For example, when the linear kernel was used the inferred function had to pass through origin because we could not explicitly specify an intercept. Ideally we would like to define some functions where weights are inferred and allow the rest of the data - where we don't know the functions - to be inferred in function space. I'll dive right into a simple example, then describe the mechanics, and finally draw some connections to genetics.
+
+**A simple example.**
+
+The simplest basis function is a non-zero mean, so I've amended the generative function from the previous post to be $$y = 10 + sin(x)$$ and fit the GP using an RBF kernel while fixing the mean to zero (the previous solution) and inferring the mean (the solution described in the next section):
+
+![Gaussian Process Regression]({{ site.baseurl }}/images/plot_gp_mean_est.svg)
+
+A few interesting features emerge. Surprisingly, the fit on the left isn't that bad; the reason is that the posterior is not confined to zero, so the model was able to identify a mixture of Gaussians at $$y=0$$ with variance low enough so that the prediction is quite close to the observation. However, as the prediction moves away from the observed points it quickly reverts back to the zero mean, which may not be what we want. On the right, we see that the model did a reasonably good job of inferring a mean and a corresponding GP that fit the data, and that the prediction reverts to the inferred mean when data is unavailable. Note that the data was generated using a sin function but inferred using an RBF kernel and the prediction is still quite good. Of course, fitting means isn't terribly exciting since we could have just subtracted the mean from the training data, so let's move on to more complex basis functions.
+
+**The mathematical model.**
+
+Working off the notation defined in the first post, the generative model is now $$y = H \beta + f(x) + \epsilon$$, where $$H$$ is the matrix of fixed values, $$\beta$$ is a vector of "fixed effects", and $$f(x) \sim N(0,V)$$ is the old GP term (or the "random effect"). This model is now a mix of fixed and random effects. [*Aside: Where the $$y$$ notation was used previously, the $$f$$ notation is now used to represent the predicted random term.*] Now let's solve it for new, unlabeled/test values $$H_*$$ and $$X_*$$.
+
+The intuition here is that instead of working with the model:
+
+$$y = g + u + \epsilon$$
+
+we can work with two orthogonal models (where minus indicates a residual):
+
+$$y = u + \epsilon_1$$
+
+$$y - u = (g - u) + \epsilon_2$$
+
+and then combine them. In other words, we separate the two components, rotate one so that it is independent, apply the usual techniques to solve, and then combine them back together. Of course in practice we want do this in a single step.
+
+As this is Bayesian regression, we first place priors on fixed effects so $$\beta \sim N(b,B)$$. Then compute the $$\hat\beta$$ on the $$V^{-1}$$ residual:
+
+$$\hat\beta = (B^{-1} + H' V^{-1} H)^{-1} (H' V^{-1} y + B^{-1} b )$$
+
+Note that (a) the prior acts like a regularizer in frequentist regression; (b) when there is no random effect and the priors are uninformative, this becomes the standard OLS fit: $$\hat\beta_{OLS} = (H' H)^{-1} H' y$$. Next, transform the fixed test values on the $$V^{-1}$$ residual:
+
+$$R = H_*' - H' V^{-1} K_*$$
+
+Now, form the new prediction as a sum of the old prediction ($$\hat f(x) = K_* V^{-1} y$$) and the predicted fixed values:
+
+$$\hat y_* = \hat f(x) + R' \hat\beta$$
+
+And it's covariance is a sum of the old covariance ($$cov(\hat f_*)$$) and an additional term (which again has a correspondence to the OLS variance estimate):
+
+$$cov(\hat y_*) = cov(\hat f_*) + R' (B^{-1} + H V^{-1} H)^{-1} R$$
+
+As before, we have the predicted mean and covariance, and we also have $$\hat\beta$$ which is the estimated fixed effect. I won't go through the code this time but I've again implemented this GP solution in R and you can see details at the end. 
+
+**A more useful example.**
+
+Let's consider a more complex function $$y = 10 - 5x + 2x^2$$, where ($$10-5x$$) is defined as the fixed effect and ($$2x^2$$) is the random effect inferred by the GP using an appropriate polynomial kernel. [*Aside: The kernel I fit is actually the product of two linear kernels, which corresponds to fitting a degree-2 polynomial model. There is a whole language to combining kernels together to fit complex functions, which is described in more detail in [RW, Chapter 4](http://www.gaussianprocess.org/gpml/chapters/RW4.pdf).*] I've decomposed the function and the inference below:
+
+![Gaussian Process Regression]({{ site.baseurl }}/images/plot_gp_basis.svg)
+
+
+**Applications to genetics.** 
+
+This model is very flexible, and aspects have appeared in many contexts including genetics. As the notation suggests, the typical model is one where $$y$$ is the phenotype/outcome for each individual; $$H$$ is the matrix of individual-level covariates or genetic variants, and $$f(x)$$ models the relationships between individuals. Very broadly, the GP has two analogs:
+
+* *The linear mixed model (LMM/MLM):* The emphasis is on maximizing power to test the $$H$$ for significance in a GWAS-like setting. When individuals are related or otherwise confounded (ex: population structure), $$f(x)$$ is used to model the relationships between and yield unbiased effect-size estimates. The kernel and the $$\sigma^2$$ are either taken a priori or fit from the data to ensure calibration but are not intended to have meaningful interpretation. Confounding between multiple phenotypes (ex: genetic correlation, longitudinal data) can also be modeled by expanding $$y$$.
+* *Heritability/BLUP:* The emphasis is on accurately estimating the $$\sigma^2$$ and predicting phenotypes into unrelated individuals using a linear kernel. The linear kernel provides a relationship between $$\sigma^2$$ estimated using maximum-likelihood (REML) and SNP-heritability (i.e. the optimal linear prediction from SNPs). The linear kernel also allows the prediction to be separated from the training data: $$\hat f(x) = X_*'X V^{-1} y$$, which means $$X V^{-1} y$$ can be precomputed using training data (referred to as the BLUP $$\beta$$s), easily shared, and applied to out-of-sample data using a simple inner-product score. As a consequence, the full posterior distribution is typically discarded. Non-linear effect distributions are instead modeled using multiple components (i.e. sums of linear kernels) or SNP-specific weight functions (i.e. weighted linear kernels).
+
+## Code
+
+The full code to solve a GP regression with fixed effects and generate all figures in this post is available in this Gist:
+
+[https://gist.github.com/sashagusev/ebf675209260880d7568](https://gist.github.com/sashagusev/ebf675209260880d7568)

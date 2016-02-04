@@ -1,7 +1,7 @@
 # Site settings
-title: Notes
+title: "Sasha Gusev"
 email: sgusev@gmail.com
-description: ""
+description: "scientist"
 baseurl: "http://sashagusev.github.io" # the subpath of your site, e.g. /blog/
 ##url: "http://sashagusev.github.io" # the base hostname & protocol for your site
 github_username:  sashagusev

@@ -1,0 +1,64 @@
+---
+layout: post
+title:  "Quick Takes: Interesting Papers from January"
+date:   2016-02-04 19:35:00
+categories: papers
+---
+
+*Intriguing papers that were published in the previous month, with highlights.*
+
+## Heritability
+
+**The contribution of rare variation to prostate cancer heritability, Mancuso et al. Nat Genet**
+
+"Our finding that 42% (95% confidence interval = 21–63%) of the genetic risk for prostate cancer is due to variants in the MAF range of 0.1–1% is striking, given that only a couple percent of neutral varia- tion is due to SNPs in this frequency range."
+
+**Abundant contribution of short tandem repeats to gene expression variation in humans, Gymrek et al. Nat Genet**
+
+"We used variance partitioning to disentangle the contribution of eSTRs from that of linked SNPs and indels and found that eSTRs contribute 10–15% of the cis heritability [of expression] mediated by all common variants."
+
+"We hypothesize that there are more eSTRs to find in the genome..."
+
+## Population genetics
+
+**Genomic Signatures of Selective Pressures and Introgression from Archaic Hominids at Human Innate Immunity Genes, Deschamps et al. AJHG**
+
+"Using full-genome sequence variation from the 1000 Genomes Project, we first show that innate immunity genes have globally evolved under stronger purifying selection than the remainder of protein-coding genes ... Finally, we show that innate immunity genes present higher Neandertal intro- gression than the remainder of the coding genome."
+
+**Visualizing spatial population structure with estimated effective migration surfaces, Petkova et al. Nat Genet**
+
+"EEMS is a new method for analyzing population structure from geo-referenced genetic samples. EEMS produces an intuitive visual representation of spatial patterns in genetic variation and highlights regions of higher-than-average and lower-than-average historical gene flow."
+
+"Distance matrices based on rare SNPs could also provide insights into more recent dispersal history..."
+
+**A Spatial Framework for Understanding Population Structure and Admixture, Bradbury et al. PLOS Gen**
+
+"We use genome-wide polymorphism data to build “geo- genetic maps,” which, when applied to stationary populations, produces a map of the geo- graphic positions of the populations, but with distances distorted to reflect historical rates of gene flow."
+
+"Additionally, although we have focused on the covariance among alleles at the same locus, linkage disequilibrium (covariance of alleles among loci) holds rich information about the timing and source of admixture events as well as information about isolation by distance."
+
+"The inclusion of ancient DNA samples in the analyzed sample offers a ￼way to get better representation of the ancestral populations from which the ancestors of modern samples received their admixture."
+
+## Gene Expression
+
+**Genetic Variation, Not Cell Type of Origin, Underlies the Majority of Identifiable Regulatory Differences in iPSCs, Burrows et al. PLOS Gen**
+
+"We show that the cell type of origin only minimally affects gene expression levels and DNA methylation in iPSCs (induced pluripotent stem cells), and that genetic variation is the main driver of regulatory differences between iPSCs of different donors. Our findings suggest that studies using iPSCs should focus on additional individuals rather than clones from the same individual."
+
+## GWAS
+
+**Leveraging Genomic Annotations and Pleiotropic Enrichment for Improved Replication Rates in Schizophrenia GWAS, Wang et al. PLOS Gen**
+
+"We have presented a novel algorithm, called CM3, which provides more accurate estimates of predicted replication probabilities for each SNP in a GWAS. Sorting SNPs based on predicted finite-sample replication probabilities incorporating auxiliary information, rather than by nominal p-values, yields a larger number of SNPs for a given replication threshold."
+
+"An important utility of the CM3 method may be selection of a greater proportion of relevant SNPs for gene set enrichment and biological pathway analyses..."
+
+## Big Data
+
+**Genotype Imputation with Millions of Reference Samples, Browning & Browning AJHG**
+
+"We demonstrate that Beagle v.4.1 scales to much larger reference panels [than IMPUTE or Minimac] by performing imputation from a simulated reference panel having 5 million samples"
+
+"When there are millions of reference samples, use of a binary reference file can reduce wall clock computation time by >80%."
+
+"With a reference panel containing 200,000 simulated European individuals, we find that markers with at least nine copies of the minor allele in the reference panel can be imputed with high accuracy (r2 > 0.8) in target samples that have been genotyped with a 1M SNP array."
