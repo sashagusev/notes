@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Gaussian process regression"
-date:   2016-01-24 19:35:00
+date:   2016-01-24
 categories: regression
 ---
 

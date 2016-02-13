@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "On 'Limitations of GCTA...' (stratification)"
-date:   2016-01-02 17:21:14
+date:   2016-01-02
 categories: heritability
 ---
 

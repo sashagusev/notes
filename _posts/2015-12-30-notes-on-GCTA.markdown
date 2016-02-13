@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "On 'Limitations of GCTA...'"
-date:   2015-12-30 17:21:14
+date:   2015-12-30
 categories: heritability
 ---
 
