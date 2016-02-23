@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Gaussian process regression (fixed effects)"
-date:   2016-02-01 00:00:00
+date:   2016-02-18
 categories: regression
 ---
 
@@ -51,19 +51,22 @@ $$cov(\hat y_*) = cov(\hat f_*) + R' (B^{-1} + H V^{-1} H)^{-1} R$$
 
 As before, we have the predicted mean and covariance, and we also have $$\hat\beta$$ which is the estimated fixed effect. I won't go through the code this time but I've again implemented this GP solution in R and you can see details at the end. 
 
-**A more useful example.**
+**A more complex example.**
 
 Let's consider a more complex function $$y = 10 - 5x + 2x^2$$, where ($$10-5x$$) is defined as the fixed effect and ($$2x^2$$) is the random effect inferred by the GP using an appropriate polynomial kernel. [*Aside: The kernel I fit is actually the product of two linear kernels, which corresponds to fitting a degree-2 polynomial model. There is a whole language to combining kernels together to fit complex functions, which is described in more detail in [RW, Chapter 4](http://www.gaussianprocess.org/gpml/chapters/RW4.pdf).*] I've decomposed the function and the inference below:
 
 ![Gaussian Process Regression]({{ site.baseurl }}/images/plot_gp_basis.svg)
 
+It's almost magic how well the model is able to separate the fixed/linear effects from the non-linear random effects. And even though we've specified the polynomial kernel to match the underlying model, the RBF kernel still does a reasonable job in the instances where lots of data is available. There are clear advantages to doing inference this way for both kinds of effects. For fixed-effects, the random term essentially regresses out the noise between individuals even when we only have a rough idea of the structure of this noise by integrating over all possible functions. For random-effects, the fixed term allows us to specify known structure in the model and make better predictions about points that are far away from the training data.
 
-**Applications to genetics.** 
+**Closing thoughts / applications.** 
 
 This model is very flexible, and aspects have appeared in many contexts including genetics. As the notation suggests, the typical model is one where $$y$$ is the phenotype/outcome for each individual; $$H$$ is the matrix of individual-level covariates or genetic variants, and $$f(x)$$ models the relationships between individuals. Very broadly, the GP has two analogs:
 
-* *The linear mixed model (LMM/MLM):* The emphasis is on maximizing power to test the $$H$$ for significance in a GWAS-like setting. When individuals are related or otherwise confounded (ex: population structure), $$f(x)$$ is used to model the relationships between and yield unbiased effect-size estimates. The kernel and the $$\sigma^2$$ are either taken a priori or fit from the data to ensure calibration but are not intended to have meaningful interpretation. Confounding between multiple phenotypes (ex: genetic correlation, longitudinal data) can also be modeled by expanding $$y$$.
-* *Heritability/BLUP:* The emphasis is on accurately estimating the $$\sigma^2$$ and predicting phenotypes into unrelated individuals using a linear kernel. The linear kernel provides a relationship between $$\sigma^2$$ estimated using maximum-likelihood (REML) and SNP-heritability (i.e. the optimal linear prediction from SNPs). The linear kernel also allows the prediction to be separated from the training data: $$\hat f(x) = X_*'X V^{-1} y$$, which means $$X V^{-1} y$$ can be precomputed using training data (referred to as the BLUP $$\beta$$s), easily shared, and applied to out-of-sample data using a simple inner-product score. As a consequence, the full posterior distribution is typically discarded. Non-linear effect distributions are instead modeled using multiple components (i.e. sums of linear kernels) or SNP-specific weight functions (i.e. weighted linear kernels).
+* *The linear mixed model (LMM/MLM):* The emphasis is on maximizing power to test the $$H$$ for significance in a GWAS-like setting. When individuals are related or otherwise confounded (ex: population structure), $$f(x)$$ is used to model the relationships between and yield unbiased effect-size estimates. The kernel and the $$\sigma^2$$ are either taken a priori or fit from the data to ensure calibration but are not intended to have meaningful interpretation. Confounding between multiple phenotypes (ex: genetic correlation, longitudinal data) can also be modeled by expanding $$y$$. A lot of research has gone into producing algorithms that are extremely fast and stable, allowing the method to scale to large sample sizes.
+* *Heritability/BLUP:* The emphasis is on accurately estimating the $$\sigma^2$$ and predicting phenotypes into unrelated individuals using a linear kernel. The linear kernel provides a relationship between $$\sigma^2$$ estimated using maximum-likelihood (REML) and SNP-heritability (i.e. the optimal linear prediction from SNPs). The linear kernel also allows the prediction to be separated from the training data: $$\hat f(x) = X_*'X V^{-1} y$$, which means $$X V^{-1} y$$ can be precomputed using training data (referred to as the BLUP $$\beta$$s), easily shared, and applied to out-of-sample data using a simple inner-product score. As a consequence, the full posterior distribution is typically discarded. Non-linear effect distributions are instead modeled using multiple components (i.e. sums of linear kernels) or SNP-specific weight functions (i.e. weighted linear kernels). A lot of research has gone into algorithms that estimate the prior distribution on effect sizes using MCMC to optimize the linear kerne.
+
+All of these models are essentially preforming the same math, but the GP formalizes the modeling assumptions in a very intuitive way. It also provides the semantics of priors, kernels, and posteriors that allow for creative extensions to the simple model. Of course, the down-side of this flexibility is computational cost, and the LMM domain has been able to make great breakthroughs in efficiency by dropping many of these features. There's *a lot* of work in genetics using these ideas, and I'll conclude with a few papers that I thought were particularly creative:
 
 ## Code
 
