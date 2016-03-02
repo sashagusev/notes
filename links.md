@@ -33,5 +33,6 @@ Yes, I've just arrived here from the 90's and am keeping a link roll, now I'm of
 | [Melissa Gymrek](http://melissagymrek.com/blog/): | Methods and post-pub reviews.
 | [Neil Lawrence](http://inverseprobability.com/blog.html): | Machine learning and scientific culture.
 | [Nick Eriksson](http://nickeriksson.blogspot.com/): | Scientific culture and hacking.
+| [Rasmus Nielsen](http://www.nielsenlab.org/blog/): | Popgen and scientific culture.
 | [Robert Plenge](http://www.plengegen.com/): | Clinical genetics.
 |---
