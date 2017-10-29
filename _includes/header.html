@@ -1,25 +1,7 @@
 <header class="header">
     <div class="navigation">
-        <a href="/" class="logo">{{ site.title }}</a>
-
-        <ul class="menu">
-            <li class="menu__entry"><a href="{{ '/about' | prepend: site.baseurl }}">About</a></li>
-            <li class="menu__entry"><a href="{{ '/' | prepend: site.baseurl }}">Blog/Notes</a></li>
-            <li class="menu__entry"><a href="{{ '/links' | prepend: site.baseurl }}">Links</a></li>
-        </ul>
+        <a href="/" class="logo">{{ site.title }} : Notes</a>
+        <br />
+<i>I study complex traits. These are my thoughts. I work <a href="http://gusevlab.org/">here</a> and make <a href="https://scholar.google.com/citations?user=mRCDpEIAAAAJ&hl=en">these</a>. Get in touch with me by email at {the letter “s”}{my last name}@gmail.com.</i>
     </div>
-
-    <ul class="social-links">
-        {% if site.author.github %}
-            <a href="https://github.com/{{ site.author.github }}" class="social-links__entry" target="_blank">
-                <i class="fa fa-github"></i>
-            </a>
-        {% endif %}
-
-        {% if site.author.twitter %}
-            <a href="https://twitter.com/{{ site.author.twitter }}" class="social-links__entry" target="_blank">
-                <i class="fa fa-twitter"></i>
-            </a>
-        {% endif %}
-    </ul>
 </header>
