@@ -63,6 +63,9 @@ How practical is genomewide prediction of expression? Let’s do some simple mat
 The dashed line is genome-wide significance, which is overkill for this analysis, but even for that cutoff all it takes is 70,000 individuals with measured expression. For comparison, GEO currently contains 1.2M human samples. Multiple studies are gearing up for whole-genome sequencing of 100,000 samples, with costs comparable to transcriptomics. It is, at most, a matter of years before we start to have an answer.
 
 ---
+
+_Thanks to Bogdan Pasaniuc for helpful comments_
+
 **Footnote.**
 Statements on causality from {% cite Gusev:2016 %}:
 
