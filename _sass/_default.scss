@@ -18,10 +18,27 @@ a {
     color: #0074d9;
     font-weight: bold;
     text-decoration: none;
-    
     &:hover {
-
+		color: #279aff;
     }
+}
+
+a.logo,
+a.logo:hover {
+	color: #333;
+	border: 3px solid #333;
+	padding: 10px 15px;
+}
+
+a.post-link {
+	background-color: #ddd;
+	color: #333;
+	padding: 7px 11px;
+	
+	&:hover,
+	&:visited {
+		background-color: #eee;
+	}
 }
 
 code {
@@ -156,6 +173,12 @@ h1 {
     font-weight: 400;
     font-size: 22px;
     color: $cloudy;
+}
+
+.post-meta {
+	font-size: 13px;
+	text-transform: uppercase;
+	color: #999;
 }
 
 .post-title {
